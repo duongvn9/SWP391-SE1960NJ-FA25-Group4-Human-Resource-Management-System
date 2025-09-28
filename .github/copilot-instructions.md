@@ -12,7 +12,7 @@
 
 ## Ngăn xếp & Phiên bản
 
-- JDK hiện tại: **Java 11** (theo `HRMS/pom.xml`). Có thể nâng lên 17 khi cần nhưng phải đồng bộ POM/workflow.
+- JDK hiện tại: **Java 17** (theo `HRMS/pom.xml`).
 - Servlet API: **Jakarta Servlet 6 (Jakarta EE 10)** – Tomcat 10.1+.
 - MySQL **8.x**, charset **utf8mb4**, **InnoDB**.
 - Đóng gói **WAR** bằng Maven.
@@ -83,4 +83,4 @@
 
 ## CI/CD
 
-- CI GitHub Actions: build với Maven trong thư mục `HRMS/` dùng JDK 11 (đồng bộ với `pom.xml`). Khi nâng phiên bản Java, hãy cập nhật cả `pom.xml` và workflow.
+- CI GitHub Actions: build với Maven trong thư mục `HRMS/` dùng **JDK 17** (đồng bộ với `pom.xml`). Khi đổi phiên bản Java, hãy cập nhật cả `pom.xml` và workflow.

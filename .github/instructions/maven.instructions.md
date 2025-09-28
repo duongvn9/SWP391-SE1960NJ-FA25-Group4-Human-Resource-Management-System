@@ -4,7 +4,7 @@
 
 - Packaging: `war`
 - Encoding: UTF-8
-- Java: 11 (theo `HRMS/pom.xml` hiện tại)
+- Java: 17
 
 ## Phụ thuộc cốt lõi (Jakarta EE 10 / Tomcat 10.1+)
 
