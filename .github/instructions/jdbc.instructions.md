@@ -1,15 +1,18 @@
 # Hướng dẫn cho DAO/JDBC
 
 ## Kết nối
-- Dùng **HikariCP**; cấu hình qua `db.properties` (url, user, pass, poolSize).
+
+- Dùng **HikariCP**; cấu hình qua `application.properties` (url, user, pass, poolSize) hoặc JNDI `jdbc/HRMSDS` trong `webapp/META-INF/context.xml`.
 - Tạo `DataSource` dùng chung (singleton) trong `DB.java` or `DataSourceFactory`.
 
 ## Quy tắc truy vấn
+
 - **PreparedStatement bắt buộc**; đặt tham số theo thứ tự; đóng resource bằng try-with-resources.
 - **Mapping** rõ ràng: ResultSet → DTO/Entity.
 - Giao dịch (commit/rollback) do lớp Service quản lý.
 
 ## Mẫu DAO
+
 ```java
 public class EmployeeDao {
   private final DataSource ds;
@@ -34,3 +37,4 @@ public class EmployeeDao {
     }
   }
 }
+```

@@ -17,7 +17,7 @@
 
 ```jsp
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://jakarta.ee/jstl/core" prefix="c" %>
 <jsp:include page="/WEB-INF/views/layout/header.jsp" />
 <div class="container my-4">
   <h1 class="h4 mb-3">${pageTitle}</h1>
