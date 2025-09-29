@@ -5,7 +5,7 @@
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-blue)](https://www.mysql.com/)
 [![Maven](https://img.shields.io/badge/Maven-3.9-red)](https://maven.apache.org/)
 
-Hệ thống quản lý nhân sự hiện đại được xây dựng bằng **Jakarta EE 10** với kiến trúc **Layered Architecture** theo chuẩn Spring Boot.
+Hệ thống quản lý nhân sự hiện đại được xây dựng bằng **Jakarta EE 10** với kiến trúc **Layered Architecture**.
 
 ## 📋 Tổng quan dự án
 
