@@ -48,7 +48,7 @@
 - Giao diện theo **Bootstrap 5.3+**, responsive.
 - Tổ chức layout: `WEB-INF/views/layout/header.jsp`, `footer.jsp`, `sidebar.jsp`; trang con include từ layout.
 - Form: có **CSRF token** (ẩn), **server-side validation** là bắt buộc; client-side chỉ hỗ trợ UX.
-- JSTL cho Jakarta EE 10: dùng URI dạng `http://jakarta.ee/jstl/*` thay cho `http://java.sun.com/jsp/jstl/*`.
+- JSTL cho Jakarta EE 10: dùng URI `jakarta.tags.core` thay cho `http://java.sun.com/jsp/jstl/core`.
 
 ## Bảo mật
 
