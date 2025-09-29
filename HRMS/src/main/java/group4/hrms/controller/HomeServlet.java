@@ -24,7 +24,7 @@ public class HomeServlet extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
 
         // Forward đến trang JSP home
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
     }
 
     @Override
