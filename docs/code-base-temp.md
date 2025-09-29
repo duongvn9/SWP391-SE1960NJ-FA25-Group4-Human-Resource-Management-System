@@ -1,51 +1,64 @@
-hrms/
-└─ src/
-   └─ main/
-      ├─ java/
-      │  └─ group4/hrms/
-      │     ├─ common/
-      │     │  ├─ config/           # AppConfig, DataSourceProvider (nếu không dùng JNDI)
-      │     │  ├─ db/               # JdbcTemplate, RowMapper, BaseRepository
-      │     │  ├─ web/              # BaseServlet, AppContextListener, Filters
-      │     │  ├─ security/         # PasswordHasher, SessionAccount, RbacUtils
-      │     │  └─ util/             # DateTimeUtil, JsonUtil, Paging
-      │     ├─ identity/            # accounts, users, roles, features
-      │     │  ├─ controller/
-      │     │  ├─ service/
-      │     │  ├─ repository/
-      │     │  ├─ entity/
-      │     │  ├─ dto/
-      │     │  └─ mapper/
-      │     ├─ requesttask/         # requests, tasks
-      │     ├─ attendance/          # attendance_logs, timesheet_periods
-      │     ├─ leave/               # leave_types, leave_balances, leave_ledger
-      │     ├─ recruitment/         # applications, job_postings, interviews
-      │     ├─ contract/            # templates, employment_contracts
-      │     ├─ payroll/             # payroll_items
-      │     └─ system/              # holidays, reports, system_params, feedback
-      │
-      ├─ resources/
-      │  ├─ application.properties  # nếu tự tạo HikariCP thay vì JNDI
-      │  ├─ logback.xml
-      │  └─ META-INF/
-      │     └─ persistence.xml      # chỉ cần nếu bạn dùng JPA; JDBC thuần thì bỏ
-      │
-      └─ webapp/
-         ├─ index.jsp               # optional; forward vào /auth/login
-         ├─ assets/                 # css, js, images
-         ├─ META-INF/
-         │  └─ context.xml          # JNDI DataSource: jdbc/HRMSDS (Tomcat)
-         └─ WEB-INF/
-            ├─ web.xml              # khai servlet/filter, welcome-file
-            ├─ beans.xml            # (nếu dùng CDI; không thì bỏ)
-            └─ views/
-               ├─ layout/           # header.jspf, footer.jspf
-               ├─ auth/             # login.jsp
-               ├─ identity/
-               ├─ requesttask/
-               ├─ attendance/
-               ├─ leave/
-               ├─ recruitment/
-               ├─ contract/
-               ├─ payroll/
-               └─ system/
+# 🏢 HRMS - Cấu trúc dự án
+
+## Backend Structure
+
+```
+src/main/java/group4/hrms/
+├── config/          # System configuration (database, security)
+├── controller/      # Presentation Layer (Servlets)
+│   ├── auth/       # Authentication controllers
+│   ├── attendance/ # Time tracking controllers
+│   ├── employee/   # Employee management controllers
+│   └── payroll/    # Payroll management controllers
+├── service/         # Business Logic Layer
+│   ├── auth/       # Authentication services
+│   └── employee/   # Employee services
+├── repository/      # Data Access Layer
+│   └── employee/   # Employee data access
+├── entity/          # Domain Models (JPA entities)
+├── dto/            # Data Transfer Objects
+│   ├── request/    # Request DTOs
+│   └── response/   # Response DTOs
+├── mapper/         # Entity ↔ DTO mapping
+├── exception/      # Custom Exception hierarchy
+├── filter/         # Servlet Filters (auth, CORS, etc.)
+├── util/           # Utility classes
+└── constants/      # Application constants
+```
+
+## Frontend Structure
+
+```
+src/main/webapp/
+├── assets/         # Static resources
+│   ├── css/       # Custom stylesheets
+│   ├── js/        # JavaScript files
+│   └── images/    # Images and icons
+├── WEB-INF/
+│   ├── views/     # JSP Pages
+│   │   ├── auth/          # Authentication pages
+│   │   ├── dashboard/     # Dashboard pages
+│   │   ├── attendance/    # Time tracking views
+│   │   ├── identity/      # Employee profile views
+│   │   ├── leave/         # Leave management views
+│   │   ├── payroll/       # Payroll views
+│   │   ├── recruitment/   # Hiring process views
+│   │   ├── requesttask/   # Task request views
+│   │   ├── contract/      # Contract management views
+│   │   ├── system/        # System admin views
+│   │   └── layout/        # Shared components
+│   ├── web.xml    # Servlet configuration
+│   └── beans.xml  # CDI configuration
+└── META-INF/      # Application metadata
+    └── context.xml # DataSource configuration
+```
+
+## Resources Structure
+
+```
+src/main/resources/
+├── application.properties # Database configuration
+├── logback.xml            # Logging configuration
+└── META-INF/
+    └── persistence.xml    # JPA configuration
+```
