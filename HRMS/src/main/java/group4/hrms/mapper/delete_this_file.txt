@@ -1,0 +1,3 @@
+# Temporary file to maintain folder structure in Git
+# This file can be deleted when actual implementation files are added
+# Git does not track empty directories, so this file ensures the folder structure is preserved

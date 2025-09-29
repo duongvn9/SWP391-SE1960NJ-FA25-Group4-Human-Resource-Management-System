@@ -1,0 +1,499 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <%@ taglib uri="jakarta.tags.core" prefix="c" %>
+        <!DOCTYPE html>
+        <html lang="vi">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Về chúng tôi - HRMS</title>
+
+            <!-- Bootstrap CSS -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+            <!-- Font Awesome -->
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+            <style>
+                :root {
+                    --primary-color: #2c5aa0;
+                    --secondary-color: #f8f9fa;
+                    --accent-color: #667eea;
+                    --success-color: #28a745;
+                    --text-dark: #333;
+                }
+
+                body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    line-height: 1.6;
+                    color: var(--text-dark);
+                }
+
+                /* Header */
+                .navbar {
+                    background: white;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                    padding: 1rem 0;
+                }
+
+                .navbar-brand {
+                    font-size: 1.8rem;
+                    font-weight: bold;
+                    color: var(--primary-color) !important;
+                }
+
+                .navbar-nav .nav-link {
+                    color: var(--text-dark) !important;
+                    font-weight: 500;
+                    margin: 0 1rem;
+                    transition: color 0.3s ease;
+                }
+
+                .navbar-nav .nav-link:hover,
+                .navbar-nav .nav-link.active {
+                    color: var(--primary-color) !important;
+                }
+
+
+
+                /* Hero Section */
+                .hero-section {
+                    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+                    color: white;
+                    padding: 100px 0 80px;
+                    text-align: center;
+                }
+
+                .hero-section h1 {
+                    font-size: 3rem;
+                    font-weight: bold;
+                    margin-bottom: 1rem;
+                }
+
+                .hero-section p {
+                    font-size: 1.2rem;
+                    opacity: 0.9;
+                }
+
+                /* Breadcrumb */
+                .breadcrumb-section {
+                    background: var(--secondary-color);
+                    padding: 1rem 0;
+                }
+
+                .breadcrumb {
+                    background: none;
+                    margin: 0;
+                }
+
+                .breadcrumb-item a {
+                    color: var(--primary-color);
+                    text-decoration: none;
+                }
+
+                /* Features Section */
+                .features-section {
+                    padding: 80px 0;
+                }
+
+                .feature-box {
+                    text-align: center;
+                    padding: 2rem;
+                    border-radius: 10px;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                    height: 100%;
+                }
+
+                .feature-box:hover {
+                    transform: translateY(-10px);
+                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+                }
+
+                .feature-icon {
+                    width: 80px;
+                    height: 80px;
+                    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto 1.5rem;
+                    color: white;
+                    font-size: 2rem;
+                }
+
+                .feature-box h4 {
+                    color: var(--primary-color);
+                    margin-bottom: 1rem;
+                    font-weight: 600;
+                }
+
+                /* Story Section */
+                .story-section {
+                    background: var(--secondary-color);
+                    padding: 80px 0;
+                }
+
+                .story-content h2 {
+                    color: var(--primary-color);
+                    font-weight: bold;
+                    margin-bottom: 1rem;
+                }
+
+                .story-content h5 {
+                    color: var(--accent-color);
+                    margin-bottom: 1.5rem;
+                }
+
+                .story-content p {
+                    margin-bottom: 1.5rem;
+                    text-align: justify;
+                }
+
+                .story-image {
+                    border-radius: 10px;
+                    overflow: hidden;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                }
+
+                .story-image img {
+                    width: 100%;
+                    height: auto;
+                    object-fit: cover;
+                }
+
+                /* Values Section */
+                .values-section {
+                    padding: 80px 0;
+                }
+
+                .section-title {
+                    text-align: center;
+                    margin-bottom: 3rem;
+                }
+
+                .section-title h2 {
+                    color: var(--primary-color);
+                    font-weight: bold;
+                    margin-bottom: 1rem;
+                }
+
+                .section-title p {
+                    font-size: 1.1rem;
+                    color: #666;
+                }
+
+                .value-item {
+                    background: white;
+                    border-radius: 10px;
+                    padding: 2rem;
+                    margin-bottom: 2rem;
+                    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+                    transition: transform 0.3s ease;
+                }
+
+                .value-item:hover {
+                    transform: translateY(-5px);
+                }
+
+                .value-item .fas {
+                    color: var(--accent-color);
+                    font-size: 2.5rem;
+                    margin-bottom: 1rem;
+                }
+
+                .value-item h4 {
+                    color: var(--primary-color);
+                    margin-bottom: 1rem;
+                }
+
+                /* Footer */
+                .footer {
+                    background: var(--text-dark);
+                    color: white;
+                    padding: 3rem 0 1rem;
+                    margin-top: 5rem;
+                }
+
+                .footer h5 {
+                    color: var(--accent-color);
+                    margin-bottom: 1rem;
+                }
+
+                .footer a {
+                    color: #ccc;
+                    text-decoration: none;
+                    transition: color 0.3s ease;
+                }
+
+                .footer a:hover {
+                    color: var(--accent-color);
+                }
+
+                .footer-bottom {
+                    border-top: 1px solid #444;
+                    padding-top: 1rem;
+                    margin-top: 2rem;
+                    text-align: center;
+                    color: #999;
+                }
+            </style>
+        </head>
+
+        <body>
+            <!-- Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+                <div class="container">
+                    <a class="navbar-brand" href="${pageContext.request.contextPath}/">
+                        <i class="fas fa-users-cog me-2"></i>HRMS
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/">Trang chủ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/#features">Tính năng</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="${pageContext.request.contextPath}/about">Giới
+                                    thiệu</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/contact">Liên hệ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/faqs">FAQs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/auth/login">Đăng nhập</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="container">
+                    <h1>Về chúng tôi</h1>
+                    <p>Khám phá câu chuyện và tầm nhìn của HRMS</p>
+                </div>
+            </section>
+
+            <!-- Breadcrumb -->
+            <section class="breadcrumb-section">
+                <div class="container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="${pageContext.request.contextPath}/">Trang chủ</a>
+                            </li>
+                            <li class="breadcrumb-item active">Về chúng tôi</li>
+                        </ol>
+                    </nav>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="feature-box">
+                                <div class="feature-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h4>Quản lý nhân sự</h4>
+                                <p>Hệ thống quản lý thông tin nhân viên toàn diện với các tính năng hiện đại và tiện
+                                    lợi.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="feature-box">
+                                <div class="feature-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <h4>Chấm công thông minh</h4>
+                                <p>Theo dõi thời gian làm việc chính xác với công nghệ chấm công hiện đại và báo cáo chi
+                                    tiết.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="feature-box">
+                                <div class="feature-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <h4>Quản lý lương thưởng</h4>
+                                <p>Tính toán lương, thưởng, phụ cấp tự động với các công thức linh hoạt và minh bạch.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="feature-box">
+                                <div class="feature-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <h4>Báo cáo thống kê</h4>
+                                <p>Dashboard trực quan với các báo cáo phân tích sâu để hỗ trợ quyết định quản lý.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Story Section -->
+            <section class="story-section">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="story-content">
+                                <h2>Câu chuyện của chúng tôi</h2>
+                                <h5>Khởi đầu từ một ý tưởng đơn giản</h5>
+                                <p>
+                                    HRMS được sinh ra từ nhu cầu thực tế của các doanh nghiệp trong việc quản lý nhân sự
+                                    một cách hiệu quả.
+                                    Chúng tôi nhận thấy rằng nhiều công ty vẫn đang sử dụng các phương pháp thủ công
+                                    hoặc các hệ thống lỗi thời,
+                                    gây khó khăn trong việc theo dõi và quản lý thông tin nhân viên.
+                                </p>
+                                <p>
+                                    Với đội ngũ phát triển trẻ và nhiệt huyết, chúng tôi đã nghiên cứu và xây dựng một
+                                    hệ thống quản lý nhân sự
+                                    hiện đại, dễ sử dụng và phù hợp với các doanh nghiệp Việt Nam.
+                                </p>
+                                <p>
+                                    Hành trình của chúng tôi bắt đầu từ môi trường học thuật tại FPT University, nơi
+                                    chúng tôi được học hỏi
+                                    và áp dụng các công nghệ tiên tiến để tạo ra sản phẩm có giá trị thực tế.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="story-image">
+                                <img src="https://via.placeholder.com/600x400/667eea/ffffff?text=HRMS+Team"
+                                    alt="HRMS Team">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Values Section -->
+            <section class="values-section">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Giá trị cốt lõi</h2>
+                        <p>Những nguyên tắc định hướng mọi hoạt động của chúng tôi</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="value-item">
+                                <i class="fas fa-lightbulb"></i>
+                                <h4>Đổi mới sáng tạo</h4>
+                                <p>Chúng tôi luôn tìm kiếm những giải pháp công nghệ mới để cải thiện trải nghiệm người
+                                    dùng và nâng cao hiệu quả quản lý.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="value-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <h4>Bảo mật tuyệt đối</h4>
+                                <p>Thông tin nhân sự là tài sản quý giá. Chúng tôi cam kết bảo vệ dữ liệu với các tiêu
+                                    chuẩn bảo mật cao nhất.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="value-item">
+                                <i class="fas fa-handshake"></i>
+                                <h4>Hỗ trợ tận tâm</h4>
+                                <p>Đội ngũ hỗ trợ chuyên nghiệp luôn sẵn sàng giúp đỡ khách hàng 24/7 với thái độ nhiệt
+                                    tình và chuyên nghiệp.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="value-item">
+                                <i class="fas fa-cogs"></i>
+                                <h4>Tùy biến linh hoạt</h4>
+                                <p>Hiểu rằng mỗi doanh nghiệp có nhu cầu riêng, chúng tôi thiết kế hệ thống có thể tùy
+                                    biến theo yêu cầu cụ thể.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="value-item">
+                                <i class="fas fa-rocket"></i>
+                                <h4>Hiệu suất cao</h4>
+                                <p>Sử dụng công nghệ hiện đại để đảm bảo hệ thống hoạt động nhanh chóng, ổn định và đáng
+                                    tin cậy.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="value-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <h4>Học hỏi không ngừng</h4>
+                                <p>Chúng tôi không ngừng học hỏi và cập nhật kiến thức để mang đến những giải pháp tốt
+                                    nhất cho khách hàng.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6">
+                            <h5>HRMS</h5>
+                            <p>Hệ thống quản lý nhân sự hiện đại, giúp doanh nghiệp tối ưu hóa quy trình quản lý và phát
+                                triển nguồn nhân lực.</p>
+                            <div class="mt-3">
+                                <a href="#" class="me-3"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="me-3"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="me-3"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6">
+                            <h5>Liên kết</h5>
+                            <ul class="list-unstyled">
+                                <li><a href="${pageContext.request.contextPath}/">Trang chủ</a></li>
+                                <li><a href="${pageContext.request.contextPath}/about">Về chúng tôi</a></li>
+                                <li><a href="${pageContext.request.contextPath}/contact">Liên hệ</a></li>
+                                <li><a href="${pageContext.request.contextPath}/faqs">FAQs</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <h5>Tính năng</h5>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Quản lý nhân viên</a></li>
+                                <li><a href="#">Chấm công</a></li>
+                                <li><a href="#">Tính lương</a></li>
+                                <li><a href="#">Báo cáo</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <h5>Liên hệ</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-envelope me-2"></i>support@hrms.com</li>
+                                <li><i class="fas fa-phone me-2"></i>+84 123 456 789</li>
+                                <li><i class="fas fa-map-marker-alt me-2"></i>Hà Nội, Việt Nam</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <p>&copy; 2025 HRMS. Phát triển bởi nhóm SWP391-SE1960NJ-FA25-Group4.</p>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        </body>
+
+        </html>
