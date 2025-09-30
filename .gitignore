@@ -78,6 +78,7 @@ ehthumbs.db
 Thumbs.db
 
 # Application specific
+*.properties
 *.properties.local
 config/database-local.properties
 
