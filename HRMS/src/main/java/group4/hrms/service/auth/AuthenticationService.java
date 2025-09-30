@@ -79,7 +79,7 @@ public class AuthenticationService {
                     user.getId(),
                     account.getUsername(),
                     user.getFullName(),
-                    getUserRole(user), // Cần implement method này
+                    getUserRole(account), // Lấy role từ account
                     "/dashboard");
 
         } catch (Exception e) {
@@ -182,12 +182,34 @@ public class AuthenticationService {
     }
 
     /**
-     * Lấy role của user
+     * Lấy role của user từ account_roles và roles table
      */
-    private String getUserRole(User user) {
-        if (user.getRole() != null) {
-            return user.getRole().getDisplayName();
+    private String getUserRole(Account account) {
+        try {
+            // Query để lấy role từ account_roles và roles
+            String sql = """
+                SELECT r.code 
+                FROM account_roles ar 
+                JOIN roles r ON ar.role_id = r.id 
+                WHERE ar.account_id = ?
+                LIMIT 1
+                """;
+            
+            try (java.sql.Connection conn = group4.hrms.util.DatabaseUtil.getConnection();
+                 java.sql.PreparedStatement stmt = conn.prepareStatement(sql)) {
+                
+                stmt.setLong(1, account.getId());
+                
+                try (java.sql.ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getString("code");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // Log lỗi nếu cần - sẽ return default role
         }
-        return User.UserRole.EMPLOYEE.getDisplayName();
+        
+        return "EMPLOYEE"; // Default role
     }
 }

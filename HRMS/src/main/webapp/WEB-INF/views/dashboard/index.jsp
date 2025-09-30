@@ -515,6 +515,17 @@
                             <span>Báo cáo</span>
                         </a>
                     </li>
+                    <!-- Admin Only Menu -->
+                    <c:if test="${sessionScope.userRole == 'ADMIN' || sessionScope.userRole == 'Admin'}">
+                        <li class="nav-item">
+                            <a href="${pageContext.request.contextPath}/admin/accounts" class="nav-link"
+                                data-tooltip="Quản lý tài khoản">
+                                <i class="fas fa-user-shield"></i>
+                                <span>Quản lý tài khoản</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    
                     <li class="nav-item">
                         <a href="${pageContext.request.contextPath}/system/settings" class="nav-link"
                             data-tooltip="Cài đặt">
@@ -632,6 +643,57 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Quick Actions for Admin -->
+                    <c:if test="${sessionScope.userRole == 'ADMIN' || sessionScope.userRole == 'Admin'}">
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="dashboard-card">
+                                    <h5 class="mb-3">
+                                        <i class="fas fa-bolt me-2 text-warning"></i>Thao tác quản trị nhanh
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-6 mb-3">
+                                            <a href="${pageContext.request.contextPath}/admin/accounts" 
+                                               class="btn btn-outline-primary w-100 py-3 text-decoration-none">
+                                                <i class="fas fa-user-shield fs-2 d-block mb-2"></i>
+                                                <strong>Quản lý tài khoản</strong>
+                                                <br>
+                                                <small class="text-muted">Tạo, sửa, xóa accounts</small>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 mb-3">
+                                            <a href="${pageContext.request.contextPath}/system/settings" 
+                                               class="btn btn-outline-secondary w-100 py-3 text-decoration-none">
+                                                <i class="fas fa-cogs fs-2 d-block mb-2"></i>
+                                                <strong>Cài đặt hệ thống</strong>
+                                                <br>
+                                                <small class="text-muted">Cấu hình hệ thống</small>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 mb-3">
+                                            <a href="${pageContext.request.contextPath}/reports" 
+                                               class="btn btn-outline-info w-100 py-3 text-decoration-none">
+                                                <i class="fas fa-chart-bar fs-2 d-block mb-2"></i>
+                                                <strong>Báo cáo tổng hợp</strong>
+                                                <br>
+                                                <small class="text-muted">Xem báo cáo chi tiết</small>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 mb-3">
+                                            <a href="${pageContext.request.contextPath}/identity/employees" 
+                                               class="btn btn-outline-success w-100 py-3 text-decoration-none">
+                                                <i class="fas fa-users-cog fs-2 d-block mb-2"></i>
+                                                <strong>Quản lý nhân viên</strong>
+                                                <br>
+                                                <small class="text-muted">Thêm, sửa thông tin</small>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
 
                     <!-- Charts and Recent Activities -->
                     <div class="row">

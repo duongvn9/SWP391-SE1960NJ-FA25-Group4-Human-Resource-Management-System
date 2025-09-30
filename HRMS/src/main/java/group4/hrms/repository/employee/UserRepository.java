@@ -105,6 +105,28 @@ public class UserRepository {
     }
 
     /**
+     * Lấy tất cả users
+     */
+    public java.util.List<User> findAll() {
+        java.util.List<User> users = new java.util.ArrayList<>();
+        String sql = "SELECT id, full_name, email, phone, created_at FROM users ORDER BY full_name";
+
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                User user = mapResultSetToUser(rs);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Lỗi khi lấy danh sách users", e);
+        }
+
+        return users;
+    }
+
+    /**
      * Map ResultSet thành User object
      */
     private User mapResultSetToUser(ResultSet rs) throws SQLException {
