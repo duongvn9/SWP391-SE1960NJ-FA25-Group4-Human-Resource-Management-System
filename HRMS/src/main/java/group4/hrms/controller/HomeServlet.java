@@ -23,6 +23,12 @@ public class HomeServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
 
+        // Kiểm tra logout message
+        String logoutParam = request.getParameter("logout");
+        if ("true".equals(logoutParam)) {
+            request.setAttribute("logoutMessage", "Bạn đã đăng xuất thành công!");
+        }
+
         // Forward đến trang JSP home
         request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
     }

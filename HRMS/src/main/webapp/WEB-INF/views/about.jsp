@@ -150,15 +150,40 @@
                 }
 
                 .story-image {
-                    border-radius: 10px;
+                    border-radius: 15px;
                     overflow: hidden;
-                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+                    position: relative;
+                    max-width: 800px;
+                    margin: 0 auto;
                 }
 
                 .story-image img {
                     width: 100%;
                     height: auto;
                     object-fit: cover;
+                    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                    background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500&q=80');
+                    background-size: cover;
+                    background-position: center;
+                    max-height: none;
+                    min-height: 400px;
+                    display: block;
+                }
+
+                .story-content p {
+                    margin-bottom: 1.5rem;
+                    font-size: 1.1rem;
+                    line-height: 1.8;
+                }
+
+                .story-content h2 {
+                    margin-bottom: 1rem;
+                    font-weight: bold;
+                }
+
+                .story-content h5 {
+                    margin-bottom: 2rem;
                 }
 
                 /* Values Section */
@@ -348,12 +373,26 @@
 
             <!-- Story Section -->
             <section class="story-section">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6">
-                            <div class="story-content">
-                                <h2>Câu chuyện của chúng tôi</h2>
-                                <h5>Khởi đầu từ một ý tưởng đơn giản</h5>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="text-center mb-5">
+                                <h2 style="color: var(--primary-color); font-weight: bold;">Câu chuyện của chúng tôi
+                                </h2>
+                                <h5 style="color: var(--accent-color);">Khởi đầu từ một ý tưởng đơn giản</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="story-image mb-4">
+                                <img src="${pageContext.request.contextPath}/assets/images/Company.jpg" alt="HRMS">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="story-content text-center">
                                 <p>
                                     HRMS được sinh ra từ nhu cầu thực tế của các doanh nghiệp trong việc quản lý nhân sự
                                     một cách hiệu quả.
@@ -371,12 +410,6 @@
                                     chúng tôi được học hỏi
                                     và áp dụng các công nghệ tiên tiến để tạo ra sản phẩm có giá trị thực tế.
                                 </p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="story-image">
-                                <img src="https://via.placeholder.com/600x400/667eea/ffffff?text=HRMS+Team"
-                                    alt="HRMS Team">
                             </div>
                         </div>
                     </div>

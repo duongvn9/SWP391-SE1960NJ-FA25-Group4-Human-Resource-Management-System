@@ -16,12 +16,12 @@ import org.slf4j.LoggerFactory;
 @WebListener
 public class DatabaseContextListener implements ServletContextListener {
     private static final Logger logger = LoggerFactory.getLogger(DatabaseContextListener.class);
-    
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         logger.info("=== Khởi tạo HRMS Application ===");
         logger.info("Đang khởi tạo database connection pool...");
-        
+
         try {
             // Test connection để đảm bảo database hoạt động
             if (DatabaseUtil.testConnection()) {
@@ -35,22 +35,22 @@ public class DatabaseContextListener implements ServletContextListener {
             logger.warn("⚠ Lỗi khi khởi tạo database: {} - Application vẫn khởi động", e.getMessage());
             logger.debug("Chi tiết lỗi database:", e);
         }
-        
+
         logger.info("=== HRMS Application đã sẵn sàng ===");
     }
-    
+
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         logger.info("=== Đang tắt HRMS Application ===");
         logger.info("Đang đóng database connection pool...");
-        
+
         try {
             DatabaseUtil.shutdown();
             logger.info("✓ Đã đóng database connection pool thành công");
         } catch (Exception e) {
             logger.error("✗ Lỗi khi đóng database connection pool", e);
         }
-        
+
         logger.info("=== HRMS Application đã tắt hoàn toàn ===");
     }
 }
