@@ -1,5 +1,10 @@
 package group4.hrms.controller.auth;
 
+import group4.hrms.dto.request.LoginRequestDTO;
+import group4.hrms.dto.response.LoginResponseDTO;
+import group4.hrms.service.auth.AuthenticationService;
+import group4.hrms.util.CsrfTokenUtil;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,6 +19,14 @@ import java.io.IOException;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = { "/auth/login" })
 public class LoginServlet extends HttpServlet {
+
+    private AuthenticationService authenticationService;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        this.authenticationService = new AuthenticationService();
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,6 +44,11 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
+        // Tạo CSRF token cho form
+        session = request.getSession(true);
+        String csrfToken = CsrfTokenUtil.getOrCreateCsrfToken(session);
+        request.setAttribute("csrfToken", csrfToken);
+
         // Hiển thị trang đăng nhập
         request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
     }
@@ -46,33 +64,39 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        // TODO: Validate input và authenticate thông qua Service layer
-        // Tạm thời dùng logic demo
-        if (isValidLogin(username, password)) {
-            // Tạo session mới
-            HttpSession session = request.getSession(true);
-            session.setAttribute("userId", 1L);
-            session.setAttribute("username", username);
-            session.setAttribute("userFullName", "Nguyễn Văn Admin");
-            session.setAttribute("userRole", "Administrator");
+        // Tạo login request DTO (không cần CSRF token khi filter disabled)
+        LoginRequestDTO loginRequest = new LoginRequestDTO(username, password, null);
 
-            // Redirect về dashboard
-            response.sendRedirect(request.getContextPath() + "/dashboard");
+        // Authenticate
+        LoginResponseDTO loginResponse = authenticationService.authenticate(loginRequest);
+
+        if (loginResponse.isSuccess()) {
+            // Đăng nhập thành công
+            HttpSession session = request.getSession(true);
+            session.setAttribute("userId", loginResponse.getUserId());
+            session.setAttribute("username", loginResponse.getUsername());
+            session.setAttribute("userFullName", loginResponse.getFullName());
+            session.setAttribute("userRole", loginResponse.getRole());
+
+            // Kiểm tra có redirect URL không
+            String redirectUrl = (String) session.getAttribute("redirectAfterLogin");
+            if (redirectUrl != null) {
+                session.removeAttribute("redirectAfterLogin");
+                response.sendRedirect(redirectUrl);
+            } else {
+                response.sendRedirect(request.getContextPath() + loginResponse.getRedirectUrl());
+            }
         } else {
             // Đăng nhập thất bại
-            request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng");
+            request.setAttribute("error", loginResponse.getMessage());
+
+            // Tạo lại CSRF token
+            HttpSession session = request.getSession(true);
+            String csrfToken2 = CsrfTokenUtil.getOrCreateCsrfToken(session);
+            request.setAttribute("csrfToken", csrfToken2);
+
             request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
         }
-    }
-
-    /**
-     * Validate thông tin đăng nhập (logic demo)
-     * TODO: Thay thế bằng authentication service thực
-     */
-    private boolean isValidLogin(String username, String password) {
-        // Demo: admin/admin hoặc user/user
-        return ("admin".equals(username) && "admin".equals(password)) ||
-                ("user".equals(username) && "user".equals(password));
     }
 
     @Override

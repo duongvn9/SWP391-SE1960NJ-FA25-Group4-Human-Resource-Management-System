@@ -30,14 +30,27 @@ public class LogoutServlet extends HttpServlet {
     private void processLogout(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
+        // Set headers để ngăn browser cache
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+
         // Hủy session hiện tại
         HttpSession session = request.getSession(false);
         if (session != null) {
+            // Xóa tất cả attributes trước khi invalidate
+            session.removeAttribute("userId");
+            session.removeAttribute("username");
+            session.removeAttribute("userFullName");
+            session.removeAttribute("userRole");
+            session.removeAttribute("loginMethod");
+
+            // Invalidate session
             session.invalidate();
         }
 
-        // Redirect về trang chủ
-        response.sendRedirect(request.getContextPath() + "/");
+        // Redirect về trang chủ với message
+        response.sendRedirect(request.getContextPath() + "/?logout=true");
     }
 
     @Override

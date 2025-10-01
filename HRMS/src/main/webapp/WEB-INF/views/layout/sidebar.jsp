@@ -65,6 +65,17 @@
                         <span>Báo cáo</span>
                     </a>
                 </li>
+                <!-- Admin Only Menu -->
+                <c:if test="${sessionScope.userRole == 'ADMIN' || sessionScope.userRole == 'Admin'}">
+                    <li class="nav-item">
+                        <a href="${pageContext.request.contextPath}/admin/accounts"
+                            class="nav-link ${pageContext.request.requestURI.contains('/admin/accounts') ? 'active' : ''}">
+                            <i class="fas fa-user-shield"></i>
+                            <span>Quản lý tài khoản</span>
+                        </a>
+                    </li>
+                </c:if>
+                
                 <li class="nav-item">
                     <a href="${pageContext.request.contextPath}/system/settings"
                         class="nav-link ${pageContext.request.requestURI.contains('/system') ? 'active' : ''}">

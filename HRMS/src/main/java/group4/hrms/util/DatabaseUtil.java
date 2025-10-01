@@ -21,7 +21,7 @@ public class DatabaseUtil {
     private static final Logger logger = LoggerFactory.getLogger(DatabaseUtil.class);
     private static HikariDataSource dataSource;
     private static final String DB_PROPERTIES_FILE = "db.properties";
-    
+
     static {
         try {
             initializeDataSource();
@@ -32,30 +32,30 @@ public class DatabaseUtil {
             // Sẽ handle trong getConnection() method
         }
     }
-    
+
     /**
      * Khởi tạo HikariCP DataSource từ file properties
      */
     private static void initializeDataSource() throws IOException {
         Properties props = loadDatabaseProperties();
-        
+
         HikariConfig config = new HikariConfig();
         config.setDriverClassName(props.getProperty("db.driver"));
         config.setJdbcUrl(props.getProperty("db.url"));
         config.setUsername(props.getProperty("db.username"));
         config.setPassword(props.getProperty("db.password"));
-        
+
         // Cấu hình connection pool
         config.setMaximumPoolSize(Integer.parseInt(props.getProperty("db.pool.maximum", "20")));
         config.setMinimumIdle(Integer.parseInt(props.getProperty("db.pool.minimum", "5")));
         config.setConnectionTimeout(Long.parseLong(props.getProperty("db.pool.timeout", "30000")));
         config.setIdleTimeout(Long.parseLong(props.getProperty("db.pool.idle", "600000")));
         config.setMaxLifetime(Long.parseLong(props.getProperty("db.pool.lifetime", "1800000")));
-        
+
         // Test query để kiểm tra connection
         String testQuery = props.getProperty("db.pool.connection.test.query", "SELECT 1");
         config.setConnectionTestQuery(testQuery);
-        
+
         // Cấu hình bổ sung cho MySQL
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
@@ -66,15 +66,15 @@ public class DatabaseUtil {
         config.addDataSourceProperty("cacheServerConfiguration", "true");
         config.addDataSourceProperty("elideSetAutoCommits", "true");
         config.addDataSourceProperty("maintainTimeStats", "false");
-        
+
         // Pool name cho monitoring
         config.setPoolName("HRMS-HikariCP");
-        
+
         dataSource = new HikariDataSource(config);
-        logger.info("Khởi tạo HikariCP connection pool thành công với pool size: {}", 
-                   config.getMaximumPoolSize());
+        logger.info("Khởi tạo HikariCP connection pool thành công với pool size: {}",
+                config.getMaximumPoolSize());
     }
-    
+
     /**
      * Load properties từ file db.properties
      */
@@ -82,29 +82,29 @@ public class DatabaseUtil {
         Properties props = new Properties();
         try (InputStream input = DatabaseUtil.class.getClassLoader()
                 .getResourceAsStream(DB_PROPERTIES_FILE)) {
-            
+
             if (input == null) {
                 logger.error("Không tìm thấy file {} trong classpath", DB_PROPERTIES_FILE);
                 logger.error("Các file có thể có trong classpath:");
                 // List một số files để debug
                 throw new IOException("Không tìm thấy file " + DB_PROPERTIES_FILE + " trong classpath");
             }
-            
+
             props.load(input);
             logger.info("Đã load properties từ file: {}", DB_PROPERTIES_FILE);
-            
+
             // Validate required properties
-            String[] requiredProps = {"db.driver", "db.url", "db.username", "db.password"};
+            String[] requiredProps = { "db.driver", "db.url", "db.username", "db.password" };
             for (String prop : requiredProps) {
                 if (props.getProperty(prop) == null || props.getProperty(prop).trim().isEmpty()) {
                     throw new IOException("Property bắt buộc không có hoặc rỗng: " + prop);
                 }
             }
-            
+
         }
         return props;
     }
-    
+
     /**
      * Lấy connection từ connection pool
      * 
@@ -120,12 +120,12 @@ public class DatabaseUtil {
                 throw new SQLException("Không thể khởi tạo DataSource: " + e.getMessage(), e);
             }
         }
-        
+
         Connection conn = dataSource.getConnection();
         logger.debug("Lấy connection từ pool thành công");
         return conn;
     }
-    
+
     /**
      * Đóng connection pool khi shutdown application
      */
@@ -135,7 +135,7 @@ public class DatabaseUtil {
             logger.info("Đã đóng HikariCP connection pool");
         }
     }
-    
+
     /**
      * Kiểm tra kết nối database
      * 
@@ -155,7 +155,7 @@ public class DatabaseUtil {
             return false;
         }
     }
-    
+
     /**
      * Lấy thông tin về connection pool hiện tại
      * 
@@ -165,15 +165,14 @@ public class DatabaseUtil {
         if (dataSource == null) {
             return "DataSource chưa được khởi tạo";
         }
-        
+
         return String.format("Pool Info - Active: %d, Idle: %d, Total: %d, Waiting: %d",
                 dataSource.getHikariPoolMXBean().getActiveConnections(),
                 dataSource.getHikariPoolMXBean().getIdleConnections(),
                 dataSource.getHikariPoolMXBean().getTotalConnections(),
-                dataSource.getHikariPoolMXBean().getThreadsAwaitingConnection()
-        );
+                dataSource.getHikariPoolMXBean().getThreadsAwaitingConnection());
     }
-    
+
     /**
      * Private constructor để ngăn khởi tạo instance
      */
