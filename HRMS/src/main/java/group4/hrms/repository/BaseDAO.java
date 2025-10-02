@@ -17,7 +17,7 @@ import java.sql.SQLException;
  */
 public abstract class BaseDAO {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-    
+
     /**
      * Lấy connection từ connection pool
      * 
@@ -27,20 +27,20 @@ public abstract class BaseDAO {
     protected Connection getConnection() throws SQLException {
         return DatabaseUtil.getConnection();
     }
-    
+
     /**
      * Đóng resources một cách an toàn
      * 
      * @param conn Connection cần đóng
      * @param stmt PreparedStatement cần đóng
-     * @param rs ResultSet cần đóng
+     * @param rs   ResultSet cần đóng
      */
     protected void closeResources(Connection conn, PreparedStatement stmt, ResultSet rs) {
         closeResultSet(rs);
         closePreparedStatement(stmt);
         closeConnection(conn);
     }
-    
+
     /**
      * Đóng resources một cách an toàn (không có ResultSet)
      * 
@@ -50,7 +50,7 @@ public abstract class BaseDAO {
     protected void closeResources(Connection conn, PreparedStatement stmt) {
         closeResources(conn, stmt, null);
     }
-    
+
     /**
      * Đóng Connection một cách an toàn
      */
@@ -64,7 +64,7 @@ public abstract class BaseDAO {
             }
         }
     }
-    
+
     /**
      * Đóng PreparedStatement một cách an toàn
      */
@@ -78,7 +78,7 @@ public abstract class BaseDAO {
             }
         }
     }
-    
+
     /**
      * Đóng ResultSet một cách an toàn
      */
@@ -92,7 +92,7 @@ public abstract class BaseDAO {
             }
         }
     }
-    
+
     /**
      * Rollback transaction một cách an toàn
      * 
@@ -108,7 +108,7 @@ public abstract class BaseDAO {
             }
         }
     }
-    
+
     /**
      * Bắt đầu transaction
      * 
@@ -121,7 +121,7 @@ public abstract class BaseDAO {
             logger.debug("Bắt đầu transaction");
         }
     }
-    
+
     /**
      * Commit transaction
      * 
@@ -134,7 +134,7 @@ public abstract class BaseDAO {
             logger.debug("Commit transaction thành công");
         }
     }
-    
+
     /**
      * Kiểm tra xem connection có đang trong transaction không
      * 

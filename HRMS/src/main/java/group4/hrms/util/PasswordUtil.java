@@ -52,6 +52,36 @@ public final class PasswordUtil {
     }
 
     /**
+     * Validate password và trả về thông báo lỗi
+     * 
+     * @param password mật khẩu cần validate
+     * @return thông báo lỗi, null nếu password hợp lệ
+     */
+    public static String validatePassword(String password) {
+        if (password == null || password.trim().isEmpty()) {
+            return "Mật khẩu không được rỗng";
+        }
+
+        if (password.length() < 8) {
+            return "Mật khẩu phải có ít nhất 8 ký tự";
+        }
+
+        if (!password.matches(".*[A-Z].*")) {
+            return "Mật khẩu phải có ít nhất 1 chữ hoa";
+        }
+
+        if (!password.matches(".*[a-z].*")) {
+            return "Mật khẩu phải có ít nhất 1 chữ thường";
+        }
+
+        if (!password.matches(".*\\d.*")) {
+            return "Mật khẩu phải có ít nhất 1 chữ số";
+        }
+
+        return null; // Password hợp lệ
+    }
+
+    /**
      * Tạo password ngẫu nhiên
      */
     public static String generateRandomPassword(int length) {

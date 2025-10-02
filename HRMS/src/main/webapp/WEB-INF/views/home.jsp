@@ -31,6 +31,19 @@
                     color: var(--text-dark);
                 }
 
+                /* Alert Messages */
+                .alert {
+                    border-radius: 10px;
+                    border: none;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                    margin-bottom: 2rem;
+                }
+
+                .alert-success {
+                    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+                    color: #155724;
+                }
+
                 /* Navigation */
                 .navbar {
                     background: rgba(255, 255, 255, 0.95);
@@ -410,9 +423,40 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/faqs">FAQs</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/auth/login">Đăng nhập</a>
-                            </li>
+
+                            <!-- Hiển thị menu theo trạng thái đăng nhập -->
+                            <c:choose>
+                                <c:when test="${not empty sessionScope.userId}">
+                                    <!-- User đã đăng nhập -->
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                                            data-bs-toggle="dropdown">
+                                            <i class="fas fa-user me-1"></i>${sessionScope.userFullName}
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item"
+                                                    href="${pageContext.request.contextPath}/dashboard">
+                                                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                                                </a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item"
+                                                    href="${pageContext.request.contextPath}/auth/logout">
+                                                    <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+                                                </a></li>
+                                        </ul>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <!-- User chưa đăng nhập -->
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="${pageContext.request.contextPath}/auth/login">
+                                            <i class="fas fa-sign-in-alt me-1"></i>Đăng nhập
+                                        </a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
                         </ul>
                     </div>
                 </div>
@@ -421,6 +465,14 @@
             <!-- Hero Section -->
             <section class="hero-section">
                 <div class="container">
+                    <!-- Logout Success Message -->
+                    <c:if test="${not empty logoutMessage}">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" data-aos="fade-down">
+                            <i class="fas fa-check-circle me-2"></i>${logoutMessage}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    </c:if>
+
                     <div class="row align-items-center">
                         <div class="col-lg-6">
                             <div class="hero-content" data-aos="fade-right">
@@ -428,9 +480,21 @@
                                 <p>Hệ thống HRMS hiện đại giúp doanh nghiệp tối ưu hóa quy trình quản lý nhân sự, từ
                                     tuyển dụng đến phát triển nghề nghiệp.</p>
                                 <div class="hero-buttons">
-                                    <a href="${pageContext.request.contextPath}/auth/login" class="btn btn-hero">
-                                        <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập ngay
-                                    </a>
+                                    <c:choose>
+                                        <c:when test="${not empty sessionScope.userId}">
+                                            <!-- User đã đăng nhập -->
+                                            <a href="${pageContext.request.contextPath}/dashboard" class="btn btn-hero">
+                                                <i class="fas fa-tachometer-alt me-2"></i>Vào Dashboard
+                                            </a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <!-- User chưa đăng nhập -->
+                                            <a href="${pageContext.request.contextPath}/auth/login"
+                                                class="btn btn-hero">
+                                                <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập ngay
+                                            </a>
+                                        </c:otherwise>
+                                    </c:choose>
                                     <a href="${pageContext.request.contextPath}/about" class="btn btn-hero-outline">
                                         <i class="fas fa-info-circle me-2"></i>Tìm hiểu thêm
                                     </a>
@@ -528,15 +592,15 @@
             <section class="stats-section">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="80">
                             <div class="stat-item">
-                                <span class="stat-number" data-count="1000">0</span>
-                                <div class="stat-label">Doanh nghiệp tin tùng</div>
+                                <span class="stat-number" data-count="200">0</span>
+                                <div class="stat-label">Doanh nghiệp tin dùng</div>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
                             <div class="stat-item">
-                                <span class="stat-number" data-count="50000">0</span>
+                                <span class="stat-number" data-count="5000">0</span>
                                 <div class="stat-label">Nhân viên được quản lý</div>
                             </div>
                         </div>

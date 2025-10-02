@@ -26,14 +26,14 @@ import java.sql.SQLException;
 @WebServlet("/test-db")
 public class DatabaseTestServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(DatabaseTestServlet.class);
-    
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         response.setContentType("text/html;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
-        
+
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -51,24 +51,24 @@ public class DatabaseTestServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>HRMS Database Connection Test</h1>");
-            
+
             // Test basic connection
             testBasicConnection(out);
-            
+
             // Test pool info
             testPoolInfo(out);
-            
+
             // Test database queries
             testDatabaseQueries(out);
-            
+
             out.println("</body>");
             out.println("</html>");
         }
     }
-    
+
     private void testBasicConnection(PrintWriter out) {
         out.println("<h2>1. Test Basic Connection</h2>");
-        
+
         try {
             if (DatabaseUtil.testConnection()) {
                 out.println("<p class='success'>✓ Kết nối database thành công!</p>");
@@ -82,10 +82,10 @@ public class DatabaseTestServlet extends HttpServlet {
             logger.error("Lỗi khi test connection", e);
         }
     }
-    
+
     private void testPoolInfo(PrintWriter out) {
         out.println("<h2>2. Connection Pool Information</h2>");
-        
+
         try {
             String poolInfo = DatabaseUtil.getPoolInfo();
             out.println("<p class='info'>" + poolInfo + "</p>");
@@ -95,22 +95,22 @@ public class DatabaseTestServlet extends HttpServlet {
             logger.error("Lỗi khi lấy pool info", e);
         }
     }
-    
+
     private void testDatabaseQueries(PrintWriter out) {
         out.println("<h2>3. Test Database Queries</h2>");
-        
+
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        
+
         try {
             conn = DatabaseUtil.getConnection();
-            
+
             // Test 1: Check MySQL version
             out.println("<h3>3.1 MySQL Version</h3>");
             stmt = conn.prepareStatement("SELECT VERSION() as version");
             rs = stmt.executeQuery();
-            
+
             if (rs.next()) {
                 String version = rs.getString("version");
                 out.println("<p class='success'>✓ MySQL Version: " + version + "</p>");
@@ -118,12 +118,12 @@ public class DatabaseTestServlet extends HttpServlet {
             }
             rs.close();
             stmt.close();
-            
+
             // Test 2: Check current database
             out.println("<h3>3.2 Current Database</h3>");
             stmt = conn.prepareStatement("SELECT DATABASE() as db_name");
             rs = stmt.executeQuery();
-            
+
             if (rs.next()) {
                 String dbName = rs.getString("db_name");
                 out.println("<p class='success'>✓ Current Database: " + dbName + "</p>");
@@ -131,12 +131,12 @@ public class DatabaseTestServlet extends HttpServlet {
             }
             rs.close();
             stmt.close();
-            
+
             // Test 3: Check current time with timezone
             out.println("<h3>3.3 Current Time (Asia/Ho_Chi_Minh)</h3>");
             stmt = conn.prepareStatement("SELECT NOW() as current_datetime, @@time_zone as server_timezone");
             rs = stmt.executeQuery();
-            
+
             if (rs.next()) {
                 String currentTime = rs.getString("current_datetime");
                 String timezone = rs.getString("server_timezone");
@@ -146,15 +146,15 @@ public class DatabaseTestServlet extends HttpServlet {
             }
             rs.close();
             stmt.close();
-            
+
             // Test 4: List existing tables
             out.println("<h3>3.4 Existing Tables</h3>");
             stmt = conn.prepareStatement("SHOW TABLES");
             rs = stmt.executeQuery();
-            
+
             out.println("<table>");
             out.println("<tr><th>Table Name</th><th>Engine</th></tr>");
-            
+
             boolean hasTables = false;
             int tableCount = 0;
             while (rs.next()) {
@@ -163,36 +163,39 @@ public class DatabaseTestServlet extends HttpServlet {
                 hasTables = true;
                 tableCount++;
             }
-            
+
             if (!hasTables) {
                 out.println("<tr><td colspan='2'><em>Chưa có bảng nào trong database</em></td></tr>");
             } else {
                 out.println("<tr><td colspan='2'><strong>Total: " + tableCount + " tables</strong></td></tr>");
             }
-            
+
             out.println("</table>");
-            
+
             // Test 5: Database character set and collation
             rs.close();
             stmt.close();
             out.println("<h3>3.5 Database Character Set</h3>");
-            stmt = conn.prepareStatement("SELECT SCHEMA_NAME, DEFAULT_CHARACTER_SET_NAME, DEFAULT_COLLATION_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ?");
+            stmt = conn.prepareStatement(
+                    "SELECT SCHEMA_NAME, DEFAULT_CHARACTER_SET_NAME, DEFAULT_COLLATION_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ?");
             stmt.setString(1, "hrmsv2");
             rs = stmt.executeQuery();
-            
+
             if (rs.next()) {
                 String charset = rs.getString("DEFAULT_CHARACTER_SET_NAME");
                 String collation = rs.getString("DEFAULT_COLLATION_NAME");
                 out.println("<p class='info'>Character Set: " + charset + "</p>");
                 out.println("<p class='info'>Collation: " + collation + "</p>");
-                
+
                 if ("utf8mb4".equals(charset)) {
-                    out.println("<p class='success'>✓ UTF8MB4 support enabled - có thể lưu emoji và ký tự đặc biệt</p>");
+                    out.println(
+                            "<p class='success'>✓ UTF8MB4 support enabled - có thể lưu emoji và ký tự đặc biệt</p>");
                 } else {
-                    out.println("<p class='warning'>⚠ Character set không phải UTF8MB4 - có thể không support emoji</p>");
+                    out.println(
+                            "<p class='warning'>⚠ Character set không phải UTF8MB4 - có thể không support emoji</p>");
                 }
             }
-            
+
         } catch (SQLException e) {
             out.println("<p class='error'>✗ Lỗi khi thực hiện queries: " + e.getMessage() + "</p>");
             logger.error("Lỗi khi thực hiện test queries", e);
