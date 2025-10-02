@@ -20,28 +20,19 @@ public class ViewAttendanceLogServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        // Lấy userId từ URL parameter, bắt buộc phải có
-        String paramUserId = req.getParameter("userId");
-        if (paramUserId == null || paramUserId.isEmpty()) {
-            resp.getWriter().write("userId parameter is required");
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        // Lấy userId từ session
+        Long userId = (Long) req.getSession().getAttribute("userId");
+
+        if (userId == null) {
+            resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }
 
-        Long userId;
-        try {
-            userId = Long.valueOf(paramUserId);
-        } catch (NumberFormatException e) {
-            resp.getWriter().write("Invalid userId parameter");
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
-
-        // Lấy danh sách attendance
+        // Lấy danh sách attendance log của user
         List<Attendance> logs = repo.findByUserId(userId);
         req.setAttribute("logs", logs);
 
-        // Forward sang JSP để render
+        // Forward sang JSP
         req.getRequestDispatcher("/WEB-INF/views/attendance_logs.jsp").forward(req, resp);
     }
 }

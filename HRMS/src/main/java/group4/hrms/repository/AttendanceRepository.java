@@ -48,7 +48,6 @@ public class AttendanceRepository {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -78,5 +77,33 @@ public class AttendanceRepository {
         }
 
         return list;
+    }
+
+    public Attendance findById(Long logId) {
+        Attendance att = null;
+        String sql = "SELECT id, user_id, check_type, checked_at, source, note, period_id, created_at "
+                + "FROM attendance_logs WHERE id = ?";
+
+        try (Connection conn = DatabaseUtil.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setLong(1, logId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                att = new Attendance();
+                att.setId(rs.getLong("id"));
+                att.setUserId(rs.getLong("user_id"));
+                att.setCheckType(rs.getString("check_type"));
+                att.setCheckedAt(rs.getTimestamp("checked_at").toLocalDateTime());
+                att.setSource(rs.getString("source"));
+                att.setNote(rs.getString("note"));
+                att.setPeriodId(rs.getObject("period_id", Long.class));
+                att.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return att;
     }
 }
