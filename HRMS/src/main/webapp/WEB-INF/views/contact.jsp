@@ -8,10 +8,8 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Liên hệ - HRMS</title>
 
-            <!-- Bootstrap CSS -->
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-            <!-- Font Awesome -->
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+            <!-- Common Styles -->
+            <jsp:include page="/WEB-INF/views/layout/public-styles.jsp" />
 
             <style>
                 :root {
@@ -253,40 +251,7 @@
 
         <body>
             <!-- Navigation -->
-            <nav class="navbar navbar-expand-lg navbar-light sticky-top">
-                <div class="container">
-                    <a class="navbar-brand" href="${pageContext.request.contextPath}/">
-                        <i class="fas fa-users-cog me-2"></i>HRMS
-                    </a>
-
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/">Trang chủ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/#features">Tính năng</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/about">Giới thiệu</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="${pageContext.request.contextPath}/contact">Liên hệ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/faqs">FAQs</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/auth/login">Đăng nhập</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            <jsp:include page="/WEB-INF/views/layout/public-header.jsp" />
 
             <!-- Hero Section -->
             <section class="hero-section">
@@ -444,55 +409,7 @@
             </section>
 
             <!-- Footer -->
-            <footer class="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6">
-                            <h5>HRMS</h5>
-                            <p>Hệ thống quản lý nhân sự hiện đại, giúp doanh nghiệp tối ưu hóa quy trình quản lý và phát
-                                triển nguồn nhân lực.</p>
-                            <div class="mt-3">
-                                <a href="#" class="me-3"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#" class="me-3"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="me-3"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6">
-                            <h5>Liên kết</h5>
-                            <ul class="list-unstyled">
-                                <li><a href="${pageContext.request.contextPath}/">Trang chủ</a></li>
-                                <li><a href="${pageContext.request.contextPath}/about">Về chúng tôi</a></li>
-                                <li><a href="${pageContext.request.contextPath}/contact">Liên hệ</a></li>
-                                <li><a href="${pageContext.request.contextPath}/faqs">FAQs</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <h5>Tính năng</h5>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Quản lý nhân viên</a></li>
-                                <li><a href="#">Chấm công</a></li>
-                                <li><a href="#">Tính lương</a></li>
-                                <li><a href="#">Báo cáo</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <h5>Liên hệ</h5>
-                            <ul class="list-unstyled">
-                                <li><i class="fas fa-envelope me-2"></i>support@hrms.com</li>
-                                <li><i class="fas fa-phone me-2"></i>+84 123 456 789</li>
-                                <li><i class="fas fa-map-marker-alt me-2"></i>Hà Nội, Việt Nam</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="footer-bottom">
-                        <p>&copy; 2025 HRMS. Phát triển bởi nhóm SWP391-SE1960NJ-FA25-Group4.</p>
-                    </div>
-                </div>
-            </footer>
-
-            <!-- Bootstrap JS -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <jsp:include page="/WEB-INF/views/layout/public-footer.jsp" />
         </body>
 
         </html>

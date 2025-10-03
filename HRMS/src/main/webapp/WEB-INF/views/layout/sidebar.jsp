@@ -37,12 +37,29 @@
                         <span>Bảng lương</span>
                     </a>
                 </li>
+                <!-- Dropdown: Đơn từ -->
                 <li class="nav-item">
-                    <a href="${pageContext.request.contextPath}/leave"
-                        class="nav-link ${pageContext.request.requestURI.contains('/leave') ? 'active' : ''}">
-                        <i class="fas fa-calendar-alt"></i>
-                        <span>Nghỉ phép</span>
+                    <a href="#" class="nav-link sidebar-dropdown-toggle" data-target="requests-submenu">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Đơn từ</span>
+                        <i class="fas fa-chevron-right dropdown-arrow ms-auto"></i>
                     </a>
+                    <ul class="sidebar-submenu" id="requests-submenu">
+                        <li>
+                            <a href="${pageContext.request.contextPath}/requests/leave/create" 
+                               class="nav-link submenu-link ${pageContext.request.requestURI.contains('/requests/leave') ? 'active' : ''}">
+                                <i class="fas fa-calendar-times"></i>
+                                <span>Leave Request</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/requests/overtime/create" 
+                               class="nav-link submenu-link ${pageContext.request.requestURI.contains('/requests/overtime') ? 'active' : ''}">
+                                <i class="fas fa-clock"></i>
+                                <span>OT Request</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="${pageContext.request.contextPath}/recruitment"
