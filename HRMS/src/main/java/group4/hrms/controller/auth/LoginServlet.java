@@ -14,10 +14,10 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Servlet xử lý đăng nhập vào hệ thống HRMS
- * Hiển thị form đăng nhập và xử lý authenticate
+ * Servlet xử lý đăng nhập vào hệ thống HRMS Hiển thị form đăng nhập và xử lý
+ * authenticate
  */
-@WebServlet(name = "LoginServlet", urlPatterns = { "/auth/login" })
+@WebServlet(name = "LoginServlet", urlPatterns = {"/auth/login"})
 public class LoginServlet extends HttpServlet {
 
     private AuthenticationService authenticationService;
@@ -77,7 +77,6 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("username", loginResponse.getUsername());
             session.setAttribute("userFullName", loginResponse.getFullName());
             session.setAttribute("userRole", loginResponse.getRole());
-
             // Kiểm tra có redirect URL không
             String redirectUrl = (String) session.getAttribute("redirectAfterLogin");
             if (redirectUrl != null) {

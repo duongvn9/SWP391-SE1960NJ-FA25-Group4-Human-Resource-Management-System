@@ -184,32 +184,33 @@ public class AuthenticationService {
     /**
      * Lấy role của user từ account_roles và roles table
      */
-    private String getUserRole(Account account) {
-        try {
-            // Query để lấy role từ account_roles và roles
-            String sql = """
-                SELECT r.code 
-                FROM account_roles ar 
-                JOIN roles r ON ar.role_id = r.id 
-                WHERE ar.account_id = ?
-                LIMIT 1
-                """;
-            
-            try (java.sql.Connection conn = group4.hrms.util.DatabaseUtil.getConnection();
-                 java.sql.PreparedStatement stmt = conn.prepareStatement(sql)) {
-                
-                stmt.setLong(1, account.getId());
-                
-                try (java.sql.ResultSet rs = stmt.executeQuery()) {
-                    if (rs.next()) {
-                        return rs.getString("code");
-                    }
+   private String getUserRole(Account account) {
+    try {
+        String sql = """
+            SELECT r.code 
+            FROM account_roles ar 
+            JOIN roles r ON ar.role_id = r.id 
+            WHERE ar.account_id = ?
+            LIMIT 1
+            """;
+
+        try (java.sql.Connection conn = group4.hrms.util.DatabaseUtil.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, account.getId());
+
+            try (java.sql.ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // ép về uppercase để đồng bộ với JSP
+                    return rs.getString("code").toUpperCase();
                 }
             }
-        } catch (Exception e) {
-            // Log lỗi nếu cần - sẽ return default role
         }
-        
-        return "EMPLOYEE"; // Default role
+    } catch (Exception e) {
+        e.printStackTrace(); // log lỗi để debug
     }
+
+    return "EMPLOYEE"; // default role
+}
+
 }

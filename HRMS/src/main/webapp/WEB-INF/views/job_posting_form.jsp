@@ -1,7 +1,7 @@
 <!-- File: WEB-INF/views/job_posting_form.jsp -->
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<jsp:include page="/layout/header.jsp"/>
+<jsp:include page="/WEB-INF/views/layout/header.jsp"/>
 
 <div class="container mt-4">
     <c:if test="${not empty error}">
@@ -55,7 +55,7 @@
     </form>
 </div>
 
-<jsp:include page="/layout/footer.jsp"/>
+<jsp:include page="/WEB-INF/views/layout/footer.jsp"/>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
