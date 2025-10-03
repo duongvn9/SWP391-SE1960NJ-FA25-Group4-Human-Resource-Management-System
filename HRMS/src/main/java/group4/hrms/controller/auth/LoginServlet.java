@@ -13,10 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-/**
- * Servlet xử lý đăng nhập vào hệ thống HRMS
- * Hiển thị form đăng nhập và xử lý authenticate
- */
 @WebServlet(name = "LoginServlet", urlPatterns = { "/auth/login" })
 public class LoginServlet extends HttpServlet {
 
