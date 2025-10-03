@@ -121,6 +121,51 @@
                     margin-left: 4px;
                 }
 
+                /* Sidebar Dropdown Styles */
+                .sidebar-submenu {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: max-height 0.3s ease;
+                    background: rgba(0, 0, 0, 0.1);
+                }
+
+                .sidebar-submenu.show {
+                    max-height: 200px;
+                }
+
+                .sidebar-submenu .nav-link {
+                    color: rgba(255, 255, 255, 0.7) !important;
+                    padding: 10px 20px 10px 40px;
+                    font-size: 0.9rem;
+                    border-left: 3px solid transparent;
+                }
+
+                .sidebar-submenu .nav-link:hover,
+                .sidebar-submenu .nav-link.active {
+                    background: rgba(255, 255, 255, 0.15) !important;
+                    color: white !important;
+                    border-left-color: white;
+                    transform: translateX(3px);
+                }
+
+                .sidebar-submenu .nav-link i {
+                    width: 16px;
+                    margin-right: 8px;
+                    font-size: 0.9rem;
+                }
+
+                .dropdown-arrow {
+                    transition: transform 0.3s ease;
+                    font-size: 0.8rem;
+                }
+
+                .sidebar-dropdown-toggle[aria-expanded="true"] .dropdown-arrow {
+                    transform: rotate(90deg);
+                }
+
                 .sidebar-header {
                     padding: 1.5rem;
                     text-align: center;
@@ -490,11 +535,29 @@
                             <span>Bảng lương</span>
                         </a>
                     </li>
+                    <!-- Dropdown: Đơn từ -->
                     <li class="nav-item">
-                        <a href="${pageContext.request.contextPath}/leave" class="nav-link" data-tooltip="Nghỉ phép">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Nghỉ phép</span>
+                        <a href="#" class="nav-link sidebar-dropdown-toggle" data-target="requests-submenu" data-tooltip="Đơn từ">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>Đơn từ</span>
+                            <i class="fas fa-chevron-right dropdown-arrow ms-auto"></i>
                         </a>
+                        <ul class="sidebar-submenu" id="requests-submenu">
+                            <li>
+                                <a href="${pageContext.request.contextPath}/requests/leave/create" 
+                                   class="nav-link submenu-link">
+                                    <i class="fas fa-calendar-times"></i>
+                                    <span>Leave Request</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/requests/overtime/create" 
+                                   class="nav-link submenu-link">
+                                    <i class="fas fa-clock"></i>
+                                    <span>OT Request</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a href="${pageContext.request.contextPath}/recruitment" class="nav-link"
@@ -838,6 +901,39 @@
 
                     sidebar.classList.toggle('collapsed');
                     mainContent.classList.toggle('expanded');
+                });
+
+                // Sidebar dropdown toggle
+                document.querySelectorAll('.sidebar-dropdown-toggle').forEach(function(toggle) {
+                    toggle.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('data-target');
+                        const submenu = document.getElementById(targetId);
+                        const arrow = this.querySelector('.dropdown-arrow');
+                        
+                        if (submenu) {
+                            if (submenu.classList.contains('show')) {
+                                submenu.classList.remove('show');
+                                this.setAttribute('aria-expanded', 'false');
+                                arrow.style.transform = 'rotate(0deg)';
+                            } else {
+                                // Close other submenus
+                                document.querySelectorAll('.sidebar-submenu').forEach(function(menu) {
+                                    menu.classList.remove('show');
+                                });
+                                document.querySelectorAll('.sidebar-dropdown-toggle').forEach(function(otherToggle) {
+                                    otherToggle.setAttribute('aria-expanded', 'false');
+                                    const otherArrow = otherToggle.querySelector('.dropdown-arrow');
+                                    if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                                });
+                                
+                                // Open current submenu
+                                submenu.classList.add('show');
+                                this.setAttribute('aria-expanded', 'true');
+                                arrow.style.transform = 'rotate(90deg)';
+                            }
+                        }
+                    });
                 });
 
                 // Counter animation
