@@ -19,8 +19,8 @@
 *.tar.gz
 *.rar
 
+src/main/resources/application.properties
 HRMS/src/main/resources/application.properties
-
 # Virtual machine crash logs
 hs_err_pid*
 replay_pid*
